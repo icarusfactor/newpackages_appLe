@@ -8,7 +8,7 @@
  Plugin Name: New FOSS Packages RSS Feed App
  Plugin URI: http://userspace.org
  Description: This app gathers RSS feed data for New FOSS Packages and requires the AppLepie project plugin.
- Version: 0.9.0
+ Version: 0.8.16
  Author: Daniel Yount IcarusFactor
  Author URI: http://userspace.org
  License: GPLv2 or later
@@ -50,6 +50,7 @@ if(!class_exists('newpackagesAppLe')&& class_exists('AppLePiePlugin')) {
             newpackagesAppActivate::activate();
         }
         // Place modification scripts here for Applepie plugin. Hardcoded to first item only currently.
+
         function start_up() {
             $ApplepiePlugin = new AppLePiePlugin();
             $Content = "<!-- Filter Starts Here -->";
@@ -58,9 +59,9 @@ if(!class_exists('newpackagesAppLe')&& class_exists('AppLePiePlugin')) {
             list($permrsslibc, $titlersslibc, $datersslibc, $contentrsslibc)= $ApplepiePlugin->feed_generate_process("https://savannah.gnu.org/news/atom.php?group=libc", 2);
             list($permrss, $titlerss, $daterss, $contentrss)= $ApplepiePlugin->feed_generate_process("https://distrowatch.com/news/dwp.xml", 6);
             $Content .= "<span style=\"font-size: 20px\">USERSPACE</span></br></br>";
-            $Content .= '<span style="font-size: 13px;line-height: 95%;"><a href="http://www.distrowatch.com" >[DistroWatch]</a></span></br>';
-            $Content .= '<span style="font-size: 13px;line-height: 95%;"><a href="' . $permrsslibc[1] . '" >[' . $titlersslibc[1] . ']</a></span></br>';
-            $Content .= '<span style="font-size: 13px;line-height: 95%;"><a href="http://www.linuxfromscratch.org" >[Build Your Own Distro]</a></span>';
+            $Content .= '<span style="font-size: 13px;line-height: 95%;"><a target="_blank" href="http://www.distrowatch.com" >[DistroWatch]</a></span></br>';
+            $Content .= '<span style="font-size: 13px;line-height: 95%;"><a target="_blank" href="' . $permrsslibc[1] . '" >[' . $titlersslibc[1] . ']</a></span></br>';
+            $Content .= '<span style="font-size: 13px;line-height: 95%;"><a  target="_blank" href="http://www.linuxfromscratch.org" >[Build Your Own Distro]</a></span>';
             $Content .= $ApplepiePlugin->feed_generate_headtofoot();
             $Content .= '<style type="text/css">';
             $Content .= '.tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}';
@@ -73,6 +74,7 @@ if(!class_exists('newpackagesAppLe')&& class_exists('AppLePiePlugin')) {
             $Content .= '<table class="tg">';
             $Content .= "<!-- Let's begin looping through each individual package item in the feed. -->";
             $i = 0;
+
             foreach($titlerss as $item)
                 : $i ++;
             if($i >= 7) {
@@ -88,7 +90,7 @@ if(!class_exists('newpackagesAppLe')&& class_exists('AppLePiePlugin')) {
                 $Content .= "<div class=\"chunk\">";
                 $Content .= "<!-- If the item has a permalink back to the original post (which 99% of them do) -->";
                 if($permrss[$i])
-                    $Content .= '<a6><a href="' . $permrss[$i] . '">';
+                    $Content .= '<a6><a  target="_blank" href="' . $permrss[$i] . '">';
                 $Content .= $titlerss[$i];
                 if($permrss[$i])
                     $Content .= '</a></BR>';
